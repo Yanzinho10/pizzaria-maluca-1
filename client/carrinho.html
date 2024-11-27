@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,20 @@
 
 </head>
 <body>
+
+    <div class="container-mensagens" id="container-mensagens" >
+
+    </div>
+
+
+    <div class="loader-full hidden">
+        <img src="./img/loader.png" width="100" />
+    </div>  
+
+
+
+
+
     
 <div class="bg-top pedido"></div>
 
@@ -36,7 +50,7 @@
 </header> 
 
 
-<section class="carrinho width-fix mt-4 ">
+<section class="carrinho width-fix mt-4 hidden" id="carrinho-vazio">
 
     <div class="card card-address">
         <div class="img-icon-details">
@@ -54,76 +68,23 @@
 </section>
 
 
-<section class="carrinho width-fix mt-4">
+<section class="carrinho width-fix mt-4 hidden" id="carrinho-cheio">
 
-    <div class="card mb-2 pr-0">
 
-        <div class="container-detalhes">
+    <div id="listaProdutos">
 
-            <div class="detalhes-produto">
-                <div class="infos-produto">
-                    <p class="name"><b>1x Calabresa</b></p>
-                    <p class="price"><b>R$ 39,90</b></p>
-                </div>
-
-                <div class="infos-produto">
-                    <p class="name-opcional mb-0">1x Borda de Catupiry</p>
-                    <p class="price-opcional mb-0">+ R$ 8,90</p>
-                </div>
-
-                <div class="infos-produto">
-                    <p class="obs-opcional mb-0">-observação para enviar talheres de plastico e copos</p>
-                    
-                </div>
-                
-            </div>
-
-            
-
-            <div class="detalhes-produto-edit">
-                <i class="fas fa-pencil-alt"></i>
-
-            </div>
-
-        </div>
+       
 
     </div>
 
-    <div class="card mb-2 pr-0">
 
-        <div class="container-detalhes">
 
-            <div class="detalhes-produto">
-                <div class="infos-produto">
-                    <p class="name"><b>1x 4 Queijos</b></p>
-                    <p class="price"><b>R$ 59,90</b></p>
-                </div>
 
-                <div class="infos-produto">
-                    <p class="name-opcional mb-0">1x Borda de Catupiry</p>
-                    <p class="price-opcional mb-0">+ R$ 8,90</p>
-                </div>
-
-                
-                
-            </div>
-
-            
-
-            <div class="detalhes-produto-edit">
-                <i class="fas fa-pencil-alt"></i>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="card mb-2">
+    <div class="card mb-2 hidden" id="containerTaxaEntrega">
         <div class="detalhes-produto">
             <div class="infos-produto">
               <p class="name mb-0"><i class="fas fa-motorcycle"></i>&nbsp;<b>Taxa de Entrega</b></p>
-              <p class="price mb-0"><b>+ R$ 5,00</b></p>
+              <p class="price mb-0"><b id="lblTaxaEntrega">-</b></p>
           </div>
        </div>
     </div>
@@ -132,7 +93,7 @@
         <div class="detalhes-produto">
             <div class="infos-produto">
               <p class="name-total mb-0"><b>Total</b></p>
-              <p class="price-total mb-0"><b>R$ 105,50</b></p>
+              <p class="price-total mb-0"><b id="lblTotalCarrinho"></b></p>
           </div>
        </div>
     </div>
@@ -141,7 +102,7 @@
 </section>
 
 
-<section class="opcionais width-fix mt-5 pb-5">
+<section class="opcionais width-fix mt-5 pb-5 hidden" id="opcoes-entrega">
 
     <div class="container-group mb-5">
         <span class="badge">Obrigatório</span>
@@ -149,15 +110,15 @@
         <p class="title-categoria mb-0"><b>Escolha uma Opção</b></p>
         <span class="sub-title-categoria">Como quer receber o Pedido?</span>
 
-        <div class="card card-opcionais mt-2">
+        <div class="card card-opcionais mt-2 hidden" id="containerTipoEntrega">
             <div class="infos-produto-opcional">
-                <p class="name mb-0"><b>Entrega (60-90min)</b></p>
+                <p class="name mb-0"><b id="lblTipoEntregaTempo">Entrega</b></p>
                
             </div>
             <div class="checks">
                 <label class="container-check">
 
-                    <input type="checkbox" />
+                    <input type="checkbox" id="chkEntrega" onchange="carrinho.method.changeTipoEntrega()" />
                     <span class="checkmark"></span>
 
                 </label>
@@ -166,14 +127,14 @@
 
         </div>
 
-        <div class="card card-opcionais mt-2">
+        <div class="card card-opcionais mt-2 hidden" id="containerTipoRetirada">
             <div class="infos-produto-opcional">
-                <p class="name mb-0"><b>Retirar no Estabelecimento</b></p>
+                <p class="name mb-0"><b id="lblTipoRetiradaTempo">Retirada</b></p>
             </div>
             <div class="checks">
                 <label class="container-check">
 
-                    <input type="checkbox" />
+                    <input type="checkbox" id="chkRetirada" onchange="carrinho.method.changeTipoRetirada()" />
                     <span class="checkmark"></span>
 
                 </label>
@@ -185,29 +146,29 @@
     </div>
 
 
-    <div class="container-group mb-5">
+    <div class="container-group mb-5 hidden" id="containerEnderecoEntrega">
         <span class="badge">Obrigatório</span>
 
-        <p class="title-categoria mb-0"><b>Qual o seu Enderço?</b></p>
+        <p class="title-categoria mb-0"><b>Qual o seu endereço?</b></p>
         <span class="sub-title-categoria">Informe o Endereço da Entrega</span>
 
-       <div class="card card-select mt-2">
-        <div class="infos-produto-opcional">
+       <div class="card card-select mt-2 hidden" id="cardAddEndereco" onclick="carrinho.method.abrirModalEndereco()">
+         <div class="infos-produto-opcional">
             <p class="mb-0 color-primary">
                 <i class="fas fa-plus-circle"></i>&nbsp;Nenhum Endereço Selecionado
             </p>
          </div>
        </div>
 
-       <div class="card card-address mt-2">
+       <div class="card card-address mt-2 hidden" id="cardEnderecoSelecionado">
         <div class="img-icon-details">
             <i class="fas fa-map-marked-alt"></i>
         </div>
         <div class="infos">
-            <p class="name mb-0"><b>Rua ola mundo,123, meu bairro</b></p>
-            <span class="text mb-0">Cidade-PA / 66625-330</span>
+            <p class="name mb-0"><b id="lblEnderecoSelecionado"></b></p>
+            <span class="text mb-0" id="lblCepEnderecoSelecionado"></span>
         </div>
-        <div class="icon-edit">
+        <div class="icon-edit" onclick="carrinho.method.abrirModalOpcoesEndereco()">
             <i class="fas fa-pencil-alt"></i>
         </div>
 
@@ -218,29 +179,24 @@
 
     <div class="container-group mb-5">
         <span class="badge">Obrigatório</span>
-
         <p class="title-categoria mb-0"><b>Nome e Sobrenome</b></p>
         <span class="sub-title-categoria">Como Vamos te chamar?</span>
-
-        <input type="text" class="form-control mt-2" placeholder="* Informe o nome e Sobrenome">
+        <input id="txtNomeSobrenome" type="text" class="form-control mt-2" placeholder="* Informe o nome e Sobrenome">
     </div>
 
     <div class="container-group mb-5">
         <span class="badge">Obrigatório</span>
-
         <p class="title-categoria mb-0"><b>Número do Seu Celular</b></p>
         <span class="sub-title-categoria">Para mais Informações do seu Pedido </span>
-
-        <input type="text" class="form-control mt-2" placeholder=" (00) 0000-0000">
+        <input id="txtCelular" type="text" class="form-control mt-2 sp_celphones" placeholder=" (00) 0000-0000">
     </div>
 
     <div class="container-group mb-5">
         <span class="badge">Obrigatório</span>
-
         <p class="title-categoria mb-0"><b>Como você Prefere Pagar?</b></p>
-        <span class="sub-title-categoria">* Pagamento na Entrega</span>
+        <span class="sub-title-categoria">Pagamento na Entrega</span>
 
-       <div class="card card-select mt-2">
+       <div class="card card-select mt-2" id="cardAddFormaPagamento" onclick="carrinho.method.abrirModalFormaPagamento()">
         <div class="infos-produto-opcional">
             <p class="mb-0 color-primary">
                 <i class="fas fa-plus-circle"></i>&nbsp;Nenhum Forma Selecionada
@@ -248,17 +204,17 @@
          </div>
        </div>
 
-       <div class="card card-address mt-2">
-        <div class="img-icon-details">
+       <div class="card card-address mt-2 hidden" id="cardFormaPagamentoSelecionada">
+        <div class="img-icon-details" id="iconFormaPagamentoSelecionada">
             <!-- <i class="fas fa-coins"></i> -->
-             <i class="fas fa-credit-card"></i>
+             <!-- <i class="fas fa-credit-card"></i> -->
 
         </div>
         <div class="infos">
-            <p class="name mb-0"><b>Cartão de Credito</b></p>
-            <span class="text mb-0">Levar Maquininha</span>
+            <p class="name mb-0"><b id="lblFormaPagamentoSelecionada"></b></p>
+            <span class="text mb-0" id="lblDescFormaPagamentoSelecionada"></span>
         </div>
-        <div class="icon-edit">
+        <div class="icon-edit" onclick="carrinho.method.abrirModalFormaPagamento()">
             <i class="fas fa-pencil-alt"></i>
         </div>
 
@@ -268,29 +224,193 @@
     </div>
 
 
-
-
-
 </section>
 
 
 
-
-
-
-<a href="./index.html" class="btn btn-yellow btn-full">
-    Fazer Pedido <span>R$ 105,50</span>
+<a class="btn btn-yellow btn-full hidden" id="btnFazerPedido" onclick="carrinho.method.fazerPedido()">
+    Fazer Pedido <span id="lblTotalCarrinhoBotao"></span>
 </a>
 
 
 
+<a href="./index.html" class="btn btn-yellow btn-full voltar hidden" id="btnVoltar">
+    Voltar para o Cardapio
+</a>
+
+
+<!-- Modal actions produto -->
+<div class="modal-actions hidden" id="modalActionsProduto">
+    <div class="backdrop" onclick="carrinho.method.fecharModalActionsProduto()"></div>
+    <div class="width-fix container-modal-actions">
+
+        <a href="#!" class="color-red" onclick="carrinho.method.removerProdutoCarrinho()" >Remover
+            <!-- <i class="fas fa-trash-alt"></i>  -->
+        </a>
+
+    </div>
+
+</div>
 
 
 
-<section class="menu-bottom disabled hidden" id="menu-bottom-closed">
-    <p class="mb-0"><b>Loja fechada no momento</b></p>
+<!-- Modal de endereço -->
+<div id="modalEndereco" class="modal fade modal-form" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-</section>
+            <div class="modal-header">
+                <h5 class="modal-title"><b>Endereço</b></h5>
+                <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal" arial-label="Close">
+                    <i class="fas fa-times"></i> Fechar
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row mb-5">
+
+                    <div class="col-8">
+                        <div class="form-group container-cep">
+                            <p class="title-categoria mb-0"><b>CEP:</b></p>
+                            <input type="text" class="form-control cep" id="txtCEP" />
+                            <a href="#!" class="btn btn-yellow btn-sm" onclick="carrinho.method.buscarCep()" style="float: right; margin-top: -45px; margin-right: 10px;">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <p class="title-categoria mb-0 mt-4"><b>Endereço:</b></p>
+                            <input type="text" class="form-control" id="txtEndereco" />
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <p class="title-categoria mb-0 mt-4"><b>Bairro:</b></p>
+                            <input type="text" class="form-control" id="txtBairro" />
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <p class="title-categoria mb-0 mt-4"><b>Número:</b></p>
+                            <input type="text" class="form-control" id="txtNumero" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-8">
+                        <div class="form-group">
+                            <p class="title-categoria mb-0 mt-4"><b>Cidade:</b></p>
+                            <input type="text" class="form-control" id="txtCidade" />
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <p class="title-categoria mb-0 mt-4"><b>UF:</b></p>
+                            <select class="form-control" id="ddlUf">
+                                    <option value="-1">...</option>
+                                    <option value="AC">AC</option>
+                                    <option value="AL">AL</option>
+                                    <option value="AP">AP</option>
+                                    <option value="AM">AM</option>
+                                    <option value="BA">BA</option>
+                                    <option value="CE">CE</option>
+                                    <option value="DF">DF</option>
+                                    <option value="ES">ES</option>
+                                    <option value="GO">GO</option>
+                                    <option value="MA">MA</option>
+                                    <option value="MT">MT</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MG">MG</option>
+                                    <option value="PA">PA</option>
+                                    <option value="PB">PB</option>
+                                    <option value="PR">PR</option>
+                                    <option value="PE">PE</option>
+                                    <option value="PI">PI</option>
+                                    <option value="RJ">RJ</option>
+                                    <option value="RN">RN</option>
+                                    <option value="RS">RS</option>
+                                    <option value="RO">RO</option>
+                                    <option value="RR">RR</option>
+                                    <option value="SC">SC</option>
+                                    <option value="SP">SP</option>
+                                    <option value="SE">SE</option>
+                                    <option value="TO">TO</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <p class="title-categoria mb-0 mt-4"><b>Complemento:</b></p>
+                            <input type="text" class="form-control" id="txtComplemento" />
+                        </div>
+                    </div>
+                   
+
+                </div>
+
+
+                <div class="footer-btn mt-3 mb-3" style="text-align: right;">
+                    <a href="#!" class="btn btn-yellow btn-sm" onclick="carrinho.method.salvarEndereco()">
+                        <i class="fas fa-check"></i>&nbsp; Salvar Endereço
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<!-- Modal actions Endereço -->
+<div class="modal-actions hidden" id="modalActionsEndereco">
+    <div class="backdrop" onclick="carrinho.method.fecharModalActionsEndereco()"></div>
+    <div class="width-fix container-modal-actions">
+
+        <a href="#!" onclick="carrinho.method.editarEnderecoCarrinho()">Editar endereço</a>
+
+        <a href="#!" class="color-red" onclick="carrinho.method.removerEnderecoCarrinho()" >Remover
+             <!-- <i class="fas fa-trash-alt"></i>   -->
+        </a>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<!-- Modal actions Pagamentos -->
+<div class="modal-actions hidden" id="modalActionsFormaPagamento">
+    <div class="backdrop" onclick="carrinho.method.fecharModalActionsFormaPagamento()"></div>
+    <div class="width-fix container-modal-actions">
+
+       
+    </div>
+
+</div>
 
 
 
@@ -301,7 +421,13 @@
 
 
 
+<script type="text/javascript" src="./js/jquery.min.js"></script>    
 <script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>    
-<script type="text/javascript" src="./js/item.js"></script>  
+<script type="text/javascript" src="./js/jquery.mask.js"></script>    
+<script type="text/javascript" src="./js/app.js"></script>    
+<script type="text/javascript" src="./js/carrinho.js"></script>  
+
+
 </body>
 </html>
+

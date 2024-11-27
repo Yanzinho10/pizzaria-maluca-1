@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,23 +12,30 @@
 
 </head>
 <body>
+
+    <div class="loader-full hidden">
+        <img src="./img/loader.png" width="100" class="animated pulse infinite" />
+    </div>  
+
+
+
     
 <div class="bg-top"></div>
 
 <header class="width-fix mt-5">
 
-    <div class="card">
+    <div class="card animated fadeInDown">
 
         <div class="d-flex">
 
-            <div class="container-img"></div>
+            <div class="container-img" id="imgLogoEmpresa" ></div>
 
             <div class="infos">
-                <h1><b>Pizzaria Maluca</b></h1>
+                <h1><b id="lblNomeEmpresa"></b></h1>
 
                 <div class="infos-sub">
-                    <p class="status-open">
-                        <i class="fa fa-clock"></i>Aberta
+                    <p class="status-open hidden">
+                        <i class="fa fa-clock"></i> <span id="lblLojaAberta"></span>
                     </p>
                     <a href="./sobre.html" class="link">
                         ver mais
@@ -48,21 +55,6 @@
 <section class="categoria width-fix mt-4">
     <div class="container-menu" id="listaCategorias">
 
-        <a href="/" class="item-categoria btn btn-white btn-sm mb-3 me-3 active">
-            <i class="fas fa-pizza-slice"></i>&nbsp; Pizzas Tradicionais
-        </a>
-
-        
-        <a href="/" class="item-categoria btn btn-white btn-sm mb-3 me-3">
-            <i class="fas fa-pizza-slice"></i>&nbsp; Pizzas doces
-        </a>
-
-          
-        <a href="/" class="item-categoria btn btn-white btn-sm mb-3 me-3">
-            <i class="fas fa-cocktail"></i>&nbsp; Bebidas
-        </a>
-
-
 
     </div>
 
@@ -70,44 +62,11 @@
 
 <section class="lista width-fix mt-0 pb-5" id="listaItensCardapio">
 
-    <div class="container-group mb-5">
-        <p class="title-categoria"><b>Pizzas Tradicionais</b></p>
-
-        <div class="card mb-2 item-cardapio">
-            <div class="d-flex">
-                <div class="container-img-produto"
-                 style="background-image: url('./img/calabresa.jpg'); background-size: cover;"></div>
-
-                <div class="infos-produto">
-                    <p class="name"><b>Calabresa</b></p>
-                    <p class="description">Molho de tomate, mussarela, cebola, calabresa, catupiry, tomate, orégano e azeitonas</p>
-                    <p class="price"><b>R$ 39,90</b></p>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-2 item-cardapio">
-            <div class="d-flex">
-                <div class="container-img-produto"
-                 style="background-image: url('./img/lombo.jpg'); background-size: cover;"></div>
-
-                <div class="infos-produto">
-                    <p class="name"><b>Lombo com calabresa</b></p>
-                    <p class="description">Molho de tomate,lombo, mussarela, cebola, calabresa, catupiry, tomate, orégano e azeitonas</p>
-                    <p class="price"><b>R$ 39,90</b></p>
-
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-
+    
 
 </section><!-- fim da lista -->
 
-<section class="menu-bottom" id="menu-bottom">
+<section class="menu-bottom animated fadeIn delay-05s" id="menu-bottom">
 
     <a href="/" class="menu-bottom-item active">
         <i class="fas fa-book-open"></i>&nbsp; Cardápio
@@ -118,9 +77,9 @@
     </a>
 
     <a href="./carrinho.html" class="menu-bottom-item">
-        <span class="badge-total-carrinho">2</span>
-        <!-- <i class="fas fa-shopping-cart"></i> -->
-         Carrinho
+        <span id="icone-carrinho-vazio" class="hidden"><i class="fas fa-shopping-cart"></i></span>
+        <span id="total-carrinho" class="badge-total-carrinho hidden"></span>
+           &nbsp;Carrinho
     </a>
 
 </section> <!-- fim do menu inferior -->
@@ -140,6 +99,8 @@
 
 
     <script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>    
+    <script type="text/javascript" src="./js/app.js"></script>    
+    <script type="text/javascript" src="./painel/js/icones-categoria.js"></script>    
     <script type="text/javascript" src="./js/cardapio.js"></script>  
 
     
